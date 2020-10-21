@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<!-- ================================================ Form Bean Definitions -->
+	<form-beans>
+		<form-bean name="loginForm"
+			type="com.example.struts.actionForms.LoginForm" />
+		
+		<form-bean name="loginForm2"
+			type="org.apache.struts.action.DynaActionForm" >
+		   <form-property name="username" type="java.lang.String"/>
+		   <form-property name="password" type="java.lang.String"/>
+		</form-bean>
+		
+		<form-bean name="empleadoForm"
+			type="com.example.struts.actionForms.EmpleadoForm" />
+	
+	</form-beans>
+
+<!-- =========================================== Global Excepction Definitions -->
+	<global-exceptions>
+		<exception key="error.message" type="java.lang.Exception" path="/error.jsp" />
+	</global-exceptions>
+	
+	<!-- =========================================== Global Forward Definitions -->
+
+	<global-forwards>
+		<forward name="login" path="/login.jsp" />
+		<!--forward name="login" path="/login2.jsp" /-->
+	</global-forwards>
+	
+	
+	<!-- =========================================== Action Mapping Definitions -->
+	<action-mappings>
+
+		<action path="/login"
+			type="com.example.struts.actions.LoginAction" name="loginForm"
+			scope="request"  input="/login.jsp">
+			<forward name="success" path="/empleado.do" redirect="true"  />
+		</action>
+		<action path="/empleado"
+			type="com.example.struts.actions.EmpleadoAction" name="empleadoForm"
+			scope="request"  parameter="accion" validate="false">
+			<forward name="success" path="/empleado.jsp" />
+			<forward name="esuccess" path="/e_empleado.jsp" />
+			<forward name="nsuccess" path="/n_empleado.jsp" />
+		</action>		
+		<action path="/eempleado"
+			type="com.example.struts.actions.EmpleadoAction" name="empleadoForm"
+			scope="request" input="/e_empleado.jsp" parameter="accion" validate="true">
+			<forward name="success" path="/empleado.jsp" />
+		</action>		
+		<action path="/nempleado"
+			type="com.example.struts.actions.EmpleadoAction" name="empleadoForm"
+			scope="request" input="/n_empleado.jsp" parameter="accion" validate="true">
+			<forward name="success" path="/empleado.jsp" />
+		</action>
+
+	</action-mappings>
+	
+	<!-- =========================================== Controller Definitions -->
+	<controller locale="true"/>
+	
+	<!-- =========================================== Controller Definitions -->
+	<message-resources parameter="messages"/>
+
+
+</struts-config>
