@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<!-- ================================================ Form Bean Definitions -->
+	<form-beans>
+		<form-bean name="loginForm"
+			type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="username" type="java.lang.String" />
+			<form-property name="password" type="java.lang.String" />
+			<form-property name="idUsuario" type="java.lang.Long" />
+		</form-bean>
+
+		<form-bean name="empleadoForm"
+			type="com.example.strutstiles.actionForms.EmpleadoForm" />
+
+	</form-beans>
+
+	<!-- =========================================== Global Excepction Definitions -->
+	<global-exceptions>
+		<exception key="error.message" type="java.lang.Exception"
+			path="/error.jsp" />
+	</global-exceptions>
+
+	<!-- =========================================== Global Forward Definitions -->
+
+	<global-forwards>
+		<forward name="login" path="/login.jsp" />
+		<forward name="error" path="/error.jsp" />
+	</global-forwards>
+
+
+	<!-- =========================================== Action Mapping Definitions -->
+	<action-mappings>
+		<action path="/login"
+			type="org.apache.struts.actions.ForwardAction" parameter="/login.jsp" />
+
+		<action path="/registrar"
+			type="com.example.strutstiles.actions.LoginAction"
+			name="loginForm" input="/login.jsp" validate="true">
+			<forward name="success" path="/empleado.do" redirect="false" />
+			<forward name="failure" path="/login.jsp" />
+		</action>
+		<action path="/empleado"
+			type="com.example.strutstiles.actions.EmpleadoAction"
+			name="empleadoForm" scope="request" parameter="accion"
+			validate="false">
+			<forward name="success" path="empleado" />
+			<forward name="esuccess" path="eempleado" />
+			<forward name="nsuccess" path="nempleado" />
+		</action>
+		<action path="/eempleado"
+			type="com.example.strutstiles.actions.EmpleadoAction"
+			name="empleadoForm" input="erroresValidacion" parameter="accion"
+			validate="true">
+			<forward name="success" path="empleado" />
+		</action>
+		<action path="/nempleado"
+			type="com.example.strutstiles.actions.EmpleadoAction"
+			name="empleadoForm" input="nempleado" parameter="accion"
+			validate="true">
+			<forward name="success" path="empleado" />
+		</action>
+
+	</action-mappings>
+
+	<!-- =========================================== Controller Definitions -->
+	<controller locale="true"
+		processorClass="org.apache.struts.tiles.TilesRequestProcessor" />
+
+	<!-- =========================================== Controller Definitions -->
+	<message-resources parameter="application" />
+
+	<!-- ========================================================= Pluggins -->
+	<plug-in
+		className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames"
+			value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml" />
+	</plug-in>
+	<plug-in className="org.apache.struts.tiles.TilesPlugin">
+		<set-property property="definitions-config"
+			value="/WEB-INF/tiles-defs.xml" />
+		<set-property property="moduleAware" value="true" />
+	</plug-in>
+</struts-config>
