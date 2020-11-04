@@ -1,0 +1,32 @@
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN" "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	
+	<field name="empleado.nombre">
+		<field-validator type="required">
+			<message key="error.nombre" />
+		</field-validator>
+		<field-validator type="regex" short-circuit="true">
+			<param name="regex">[A-Z,a-z]{3,}</param>
+			<message key="error.nombre.format" />
+		</field-validator>
+		<field-validator type="noPermitidas">
+			<param name="palabrasNoPermitidas">DROP,CREATE</param>
+			<message key="errors.noPermitidas" />
+		</field-validator>
+	</field>
+	<field name="empleado.apellidos">
+		<field-validator type="required">
+			<message key="error.apellidos" />
+		</field-validator>
+		<field-validator type="noPermitidas">
+			<param name="palabrasNoPermitidas">DROP,CREATE</param>
+			<message key="errors.noPermitidas" />
+		</field-validator>
+	</field>
+	<validator type="int">
+        <param name="fieldName">empleado.edad</param>
+        <param name="min">18</param>
+			<param name="max">65</param>
+			<message>La edad debe ser mayor de ${min} años y menor de ${65}</message>
+    </validator>
+</validators>

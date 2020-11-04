@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+<struts>
+
+<!-- 	<constant name="struts.enable.DynamicMethodInvocation" -->
+<!-- 		value="false"></constant> -->
+	<constant name="struts.devMode" value="true"></constant>
+	<constant name="struts.custom.i18n.resources" value="application"></constant>
+
+
+	<package name="default" extends="struts-default" namespace="/">
+
+		<action name="">
+			<result>index.jsp</result>
+		</action>
+		<action name="login"
+			class="com.example.struts2.action.LoginAction">
+			<result name="error">/index.jsp</result>
+			<result name="input">/index.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">empleado</param>
+				<param name="namespace">/empleados</param>
+			</result>
+		</action>
+	</package>
+	<package name="gesEmpleado" extends="struts-default"
+		namespace="/empleados">
+		<interceptors>
+			<interceptor name="myInterceptor"
+				class="com.example.struts2.interceptor.MyLogginInterceptor"></interceptor>
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="myInterceptor" />
+				<interceptor-ref name="defaultStack">
+					<param name="validation.excludeMethods">execute,editar,nuevo</param>
+<!-- 					<param name="exception.logEnabled">true</param> -->
+<!-- 					<param name="exception.logLevel">ERROR</param> -->
+<!-- 					<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit</param> -->
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myStack" />
+		<global-results>
+			<result name="login" type="redirectAction">
+				<param name="actionName">login</param>
+				<param name="namespace">/</param>
+			</result>
+			<result name="error">/error.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error"
+				exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		
+		<action name="empleado"
+			class="com.example.struts2.action.EmpleadoAction" method="execute">
+			<result name="input">/empleados/empleado.jsp</result>
+			<result name="success">/empleados/empleado.jsp</result>
+		</action>
+		<action name="editar"
+			class="com.example.struts2.action.EmpleadoAction" method="editar">
+			<result name="input">/empleados/e_empleado.jsp</result>
+			<result name="success">/empleados/e_empleado.jsp</result>
+		</action>
+		<action name="nuevo"
+			class="com.example.struts2.action.EmpleadoAction" method="nuevo">
+			<result name="input">/empleados/n_empleado.jsp</result>
+			<result name="success">/empleados/n_empleado.jsp</result>
+		</action>
+		<action name="crear"
+			class="com.example.struts2.action.EmpleadoAction" method="crear">
+			<result name="input">/empleados/n_empleado.jsp</result>
+			<result name="error">/empleados/n_empleado.jsp</result>
+			<result name="success">/empleados/empleado.jsp</result>
+		</action>
+		<action name="grabar"
+			class="com.example.struts2.action.EmpleadoAction" method="grabar">
+			<result name="input">/empleados/e_empleado.jsp</result>
+			<result name="success">/empleados/empleado.jsp</result>
+		</action>
+	</package>
+
+</struts>
