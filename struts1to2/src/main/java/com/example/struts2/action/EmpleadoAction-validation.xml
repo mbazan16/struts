@@ -27,6 +27,6 @@
         <param name="fieldName">empleado.edad</param>
         <param name="min">18</param>
 			<param name="max">65</param>
-			<message>La edad debe ser mayor de ${min} años y menor de ${65}</message>
+			<message>La edad debe ser mayor de ${min} años y menor de ${max}</message>
     </validator>
 </validators>

@@ -9,16 +9,14 @@
 <body>
 	<div class="contenedorLogin">	
 
-		<s:form action="login">
+		<s:form action="login" validate="true">
 			<p>
 				<s:text name="aplication.login" />
 			</p>
-
 			<s:textfield name="username" key="aplication.campo.username" />
-			<br>
 			<s:password name="password" key="aplication.campo.password" />
-			<s:submit name="btnEnviar" type="submit" key="aplication.enviar"
-				align="center" class="button" />
+			<s:submit type="submit" 
+				align="center" class="button" value="Ir"/>
 		</s:form>
 	</div>
 	<s:if test="hasActionErrors()">

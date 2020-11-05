@@ -21,6 +21,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	private String password;
 	Map<String, Object> mapaSession;
+	
+	
 
 	@Override
 	public String execute() throws Exception {
@@ -41,8 +43,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 		}catch (ServicesException e) {
 			log.error("Exception", e);
+			String[] params= {username};
 			if(USERNAME_INCORRECTO.equalsIgnoreCase(e.getClaveError()))
-				addFieldError("userame", getText("error.username.novalid"));
+				addFieldError("username", getText("error.username.novalid",params));
 			if(PASSWORD_INCORRECTA.equalsIgnoreCase(e.getClaveError()))
 				addFieldError("password", getText("error.password.novalid"));
 			log.info("ActionSupport.INPUT:"+ActionSupport.INPUT);
